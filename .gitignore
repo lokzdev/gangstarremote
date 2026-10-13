@@ -1,0 +1,51 @@
+# Gradle / Android build
+android-rat/app/build/
+android-rat/.gradle/
+android-rat/**/build/
+android-rat/local.properties
+android-rat/*.apk
+android-rat/*.aab
+
+# Python / Server
+server/venv/
+server/__pycache__/
+server/**/__pycache__/
+server/*.pyc
+server/*.db
+server/*.sqlite3
+server/.env
+server/.env.*
+server/*.log
+server/instance/
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+debug-*.log
+
+# APKs / Binaries
+*.apk
+*.aab
+*.dex
+*.so
+
+# Gradle wrapper (optional, but usually committed)
+# android-rat/gradlew
+# android-rat/gradlew.bat
+# android-rat/gradle/wrapper/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/

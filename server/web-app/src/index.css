@@ -1,0 +1,555 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0f172a;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* CSS Variables para responsividade */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  --font-xs: 10px;
+  --font-sm: 12px;
+  --font-md: 14px;
+  --font-lg: 16px;
+  --font-xl: 18px;
+  --font-2xl: 24px;  
+  /* Cyberpunk Theme Variables (Neon Blue) */
+  --cyber-bg: #030516;
+  --cyber-panel: rgba(8, 13, 28, 0.75);
+  --neon-blue: #38b6ff;
+  --neon-blue-glow: rgba(56, 182, 255, 0.25);
+  --neon-accent: #7be2ff;
+  --ui-muted: rgba(255,255,255,0.08);
+  
+  --touch-target: 44px; /* Mínimo para toque no mobile */
+}
+
+body {
+  margin: 0;
+  min-width: 280px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   🎯 AUTO-RESPONSIVIDADE PARA MOBILE (WEBVIEW)
+   ============================================ */
+
+/* Esconde scrollbar mas mantém funcionalidade */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Touch-friendly buttons */
+.touch-btn {
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ============================================
+   📱 MOBILE FIRST - Telas < 640px
+   ============================================ */
+@media (max-width: 639px) {
+  :root {
+    --spacing-xs: 2px;
+    --spacing-sm: 4px;
+    --spacing-md: 8px;
+    --spacing-lg: 12px;
+    --spacing-xl: 16px;
+    
+    --font-xs: 9px;
+    --font-sm: 10px;
+    --font-md: 12px;
+    --font-lg: 14px;
+    --font-xl: 16px;
+    --font-2xl: 20px;
+  }
+  
+  /* Header compacto */
+  .mobile-header {
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 48px !important;
+  }
+  
+  .mobile-header h1 {
+    font-size: 14px !important;
+  }
+  
+  .mobile-header p {
+    display: none !important;
+  }
+  
+  /* Botões compactos */
+  .mobile-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    min-height: 36px !important;
+  }
+  
+  .mobile-btn span:not(.mobile-icon) {
+    display: none;
+  }
+  
+  .mobile-btn .mobile-icon {
+    display: inline-flex !important;
+  }
+  
+  /* Cards de dispositivo */
+  .device-card {
+    padding: 10px !important;
+  }
+  
+  .device-card-title {
+    font-size: 13px !important;
+  }
+  
+  .device-card-info {
+    font-size: 10px !important;
+  }
+  
+  /* Grid responsivo */
+  .mobile-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  
+  .mobile-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+  
+  /* Container full width */
+  .mobile-container {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    max-width: 100% !important;
+  }
+  
+  /* VNC Screen responsivo */
+  .vnc-container {
+    height: calc(100vh - 120px) !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Controles VNC compactos */
+  .vnc-controls {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    padding: 8px !important;
+    backdrop-filter: blur(10px) !important;
+    z-index: 100 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    justify-content: center !important;
+  }
+  
+  .vnc-controls button {
+    padding: 8px 12px !important;
+    font-size: 10px !important;
+    flex: 0 0 auto !important;
+  }
+  
+  /* Painel lateral overlay em mobile */
+  .mobile-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 200 !important;
+    background: rgba(15, 23, 42, 0.98) !important;
+    padding: 16px !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Tabs compactos */
+  .mobile-tabs {
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    padding-bottom: 4px !important;
+  }
+  
+  .mobile-tabs button {
+    padding: 6px 10px !important;
+    font-size: 10px !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* FAB (Floating Action Button) */
+  .mobile-fab {
+    position: fixed !important;
+    bottom: 16px !important;
+    right: 16px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+    z-index: 150 !important;
+  }
+  
+  /* Status bar fixa no topo */
+  .mobile-status-bar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 32px !important;
+    background: linear-gradient(to right, #7c3aed, #db2777) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 12px !important;
+    font-size: 10px !important;
+    z-index: 300 !important;
+  }
+  
+  /* Bottom nav */
+  .mobile-bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 56px !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    z-index: 200 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .mobile-bottom-nav button {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    padding: 4px !important;
+    font-size: 9px !important;
+    color: #94a3b8 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  .mobile-bottom-nav button.active {
+    color: #a855f7 !important;
+  }
+  
+  .mobile-bottom-nav button svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  
+  /* Ajuste para conteúdo com bottom nav */
+  .has-bottom-nav {
+    padding-bottom: 64px !important;
+  }
+  
+  /* Modal fullscreen em mobile */
+  .mobile-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 500 !important;
+    background: #0f172a !important;
+    overflow-y: auto !important;
+  }
+  
+  .mobile-modal-header {
+    position: sticky !important;
+    top: 0 !important;
+    background: #1e293b !important;
+    padding: 12px 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    z-index: 10 !important;
+  }
+}
+
+/* ============================================
+   📱 TABLETS - Telas 640px - 1024px
+   ============================================ */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tablet-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .tablet-header {
+    padding: 12px 16px !important;
+  }
+}
+
+/* ============================================
+   💻 DESKTOP - Telas >= 1024px
+   ============================================ */
+@media (min-width: 1024px) {
+  .desktop-sidebar {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ============================================
+   🎨 ANIMAÇÕES CUSTOMIZADAS
+   ============================================ */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   🎛️ CYBERPUNK THEME UTILITIES
+   ============================================ */
+.cyber-bg {
+  background: radial-gradient(1200px 400px at 10% 10%, rgba(56,182,255,0.06), transparent), var(--cyber-bg);
+  color: var(--neon-accent);
+}
+
+.neon-panel {
+  background: linear-gradient(180deg, rgba(8,13,28,0.9), var(--cyber-panel));
+  border: 1px solid rgba(56,182,255,0.06);
+  box-shadow: 0 6px 30px var(--neon-blue-glow);
+  color: #e6f7ff;
+}
+
+.btn-neon {
+  background: linear-gradient(90deg, var(--neon-blue), #7be2ff);
+  color: #00121a;
+  box-shadow: 0 6px 18px var(--neon-blue-glow), inset 0 -2px 8px rgba(0,0,0,0.25);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.btn-neon:hover { transform: translateY(-3px); box-shadow: 0 10px 28px var(--neon-blue-glow); }
+
+.glow-text {
+  text-shadow: 0 0 18px var(--neon-blue-glow), 0 0 28px rgba(123,226,255,0.06);
+}
+
+.sidebar-neon {
+  background: linear-gradient(180deg, rgba(2,8,23,0.85), rgba(4,12,30,0.9));
+  border-right: 1px solid rgba(56,182,255,0.04);
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* ============================================
+   🎯 UTILIDADES RESPONSIVAS
+   ============================================ */
+
+/* Safe area para notch/barra de status */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.safe-left {
+  padding-left: env(safe-area-inset-left, 0);
+}
+
+.safe-right {
+  padding-right: env(safe-area-inset-right, 0);
+}
+
+/* Força portrait em mobile */
+@media (max-width: 640px) and (orientation: landscape) {
+  .force-portrait-warning {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: #0f172a !important;
+    z-index: 9999 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 20px !important;
+  }
+  
+  .force-portrait-warning::before {
+    content: "📱" !important;
+    font-size: 48px !important;
+    margin-bottom: 16px !important;
+  }
+  
+  .force-portrait-warning::after {
+    content: "Gire o dispositivo para modo retrato" !important;
+    font-size: 16px !important;
+    color: #94a3b8 !important;
+  }
+}
+
+/* VNC Screen auto-fit */
+.vnc-screen-fit {
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - 150px);
+  object-fit: contain;
+}
+
+/* Touch feedback */
+.touch-feedback {
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.touch-feedback:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* Swipe indicators */
+.swipe-indicator {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.swipe-indicator-top {
+  top: 8px;
+}
+
+.swipe-indicator-bottom {
+  bottom: 8px;
+}

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="hydraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d5a6c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a3f4d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Hydra - Three-headed dragon -->
+  <g fill="url(#hydraGrad)">
+    <!-- Left Head -->
+    <path d="M35 85 L20 70 L25 65 L35 75 L40 60 L45 75 L55 55 L50 80 L60 75 L50 90 L55 100 L45 95 L40 110 L35 95 Z"/>
+    <!-- Center Head (Main) -->
+    <path d="M100 30 L90 50 L85 45 L90 60 L80 55 L90 70 L85 80 L95 75 L100 90 L105 75 L115 80 L110 70 L120 55 L110 60 L115 45 L110 50 Z"/>
+    <!-- Right Head -->
+    <path d="M165 85 L180 70 L175 65 L165 75 L160 60 L155 75 L145 55 L150 80 L140 75 L150 90 L145 100 L155 95 L160 110 L165 95 Z"/>
+    <!-- Body/Shield -->
+    <path d="M70 100 L100 85 L130 100 L135 130 L130 160 L100 175 L70 160 L65 130 Z"/>
+    <!-- Neck connections -->
+    <path d="M50 95 L70 105 L75 115 L60 110 Z"/>
+    <path d="M150 95 L130 105 L125 115 L140 110 Z"/>
+    <!-- Center neck -->
+    <path d="M90 85 L100 95 L110 85 L115 100 L100 110 L85 100 Z"/>
+    <!-- Scales on body -->
+    <path d="M85 120 L100 110 L115 120 L100 130 Z" fill="#4a6b7c"/>
+    <path d="M80 140 L100 130 L120 140 L100 150 Z" fill="#4a6b7c"/>
+  </g>
+</svg>
+
